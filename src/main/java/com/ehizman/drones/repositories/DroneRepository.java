@@ -1,8 +1,8 @@
 package com.ehizman.drones.repositories;
 
 import com.ehizman.drones.model.Drone;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 
-public interface DroneRepository extends JpaRepository<Drone, String> {
+public interface DroneRepository extends MongoRepository<Drone, String> {
 }

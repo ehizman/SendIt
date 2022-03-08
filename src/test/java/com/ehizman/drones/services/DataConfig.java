@@ -1,0 +1,11 @@
+package com.ehizman.drones.services;
+
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@EnableAutoConfiguration
+@Configuration
+@ComponentScan("com.ehizman.drones.**")
+public class DataConfig {
+}
