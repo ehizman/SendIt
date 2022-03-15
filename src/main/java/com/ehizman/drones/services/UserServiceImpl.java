@@ -8,6 +8,7 @@ import com.ehizman.drones.model.User;
 import com.ehizman.drones.model.mapper.UserMapper;
 import com.ehizman.drones.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -64,8 +66,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .orElseThrow(()->
                         new UsernameNotFoundException(String.format("User with %s not found", email))
                 );
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                getAuthorities(user));
     }
 
-
+    private Set<SimpleGrantedAuthority> getAuthorities(User user) {
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        user.getRoles().forEach(
+                role -> {
+                    authorities.addAll(role.getGrantedAuthorities());
+                }
+        );
+        return authorities;
+    }
 }

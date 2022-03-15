@@ -13,10 +13,12 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 public enum Permission {
-    PACKAGE_READ("package:read"),
-    PACKAGE_WRITE("package:write");
+    CHECK_PACKAGE_DETAILS("package:read"),
+    ADD_NEW_PACKAGE("package:write"),
+    FETCH_ALL_DRONES("drone:read"),
+    ADD_NEW_DRONE("drone:write");
 
-    private Set<Role> roles = new HashSet<>();
+    private final Set<Role> roles = new HashSet<>();
 
     private String permission;
 

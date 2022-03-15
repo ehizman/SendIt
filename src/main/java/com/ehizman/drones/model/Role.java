@@ -11,18 +11,17 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.ehizman.drones.model.Permission.PACKAGE_READ;
-import static com.ehizman.drones.model.Permission.PACKAGE_WRITE;
+import static com.ehizman.drones.model.Permission.*;
 
 @Getter
 @NoArgsConstructor
 public enum Role {
-    USER(Sets.newHashSet(PACKAGE_READ, PACKAGE_WRITE));
+    USER(Sets.newHashSet(CHECK_PACKAGE_DETAILS, ADD_NEW_PACKAGE)),
+    ADMIN(Sets.newHashSet(CHECK_PACKAGE_DETAILS, ADD_NEW_PACKAGE, FETCH_ALL_DRONES, ADD_NEW_DRONE));
 
     @Id
     private Long id;
 
-    private String name;
     private Set<Permission> permissions;
 
     Role(HashSet<Permission> permissions) {

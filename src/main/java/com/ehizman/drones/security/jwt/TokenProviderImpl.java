@@ -105,12 +105,14 @@ public class TokenProviderImpl implements TokenProvider{
                                                                       final UserDetails userDetails) {
         final JwtParser jwtParser = Jwts.parser().setSigningKey(SIGNING_KEY);
         final Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);
+        log.info("JWS Claims --> {}", claimsJws);
         final Claims claims = claimsJws.getBody();
 
         final Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
+        log.info("Authorities --> {} ", authorities);
         return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
     }
 }
